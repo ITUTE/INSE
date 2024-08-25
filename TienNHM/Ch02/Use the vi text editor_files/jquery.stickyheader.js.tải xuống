@@ -1,0 +1,186 @@
+$(function () {
+    $('.sticky-wrap table.sticky').each(function () {
+        if ($(this).find('th').length > 0) {
+            // Clone <thead>
+            var $w = $(window);
+            var $t = $(this);
+            var $thead = $t.find('thead').clone();
+            var $col = $t.find('thead, tbody').clone();
+
+            // Add class, remove margins, reset width and wrap table
+            $t
+                .addClass('sticky-enabled')
+                .css({
+                    margin: 0
+                });
+
+            if ($t.hasClass('overflow-y')) {
+                $t.removeClass('overflow-y').parent().addClass('overflow-y');
+            }
+            var $hasHead = $(this).find('thead').length > 0;
+
+            // Create new sticky table head (basic)
+            if ($hasHead) {
+                $t.after('<table class="sticky-thead" />');
+            }
+
+            // If <tbody> contains <th>, then we create sticky column and intersect (advanced)
+            if ($t.find('tbody th').length > 0) {
+                $t.after('<table class="sticky-col" />');
+                if ($hasHead) {
+                    $t.after('<table class="sticky-intersect" />');
+                }
+            }
+
+            // Create shorthand for things
+            var $stickyHead = $(this).siblings('.sticky-thead');
+            var $stickyCol = $(this).siblings('.sticky-col');
+            var $stickyInsct = $(this).siblings('.sticky-intersect');
+            var $stickyWrap = $(this).parent('.sticky-wrap');
+
+            $stickyHead.append($thead);
+
+            $stickyCol.append($col).find('tbody td').remove();
+            if ($hasHead) {
+                $stickyCol.find('thead th:gt(0)').remove();
+                var $intercell = $t.find('thead th:first-child');
+                $stickyInsct.html('<thead><tr><th>' + $intercell.html() + '</th></tr></thead>');
+                // Fixup table widths
+
+                $intercell = $t.find('colgroup col:first-child');
+                $stickyInsct.width($intercell.width());
+                $stickyInsct.css("maxWidth", $intercell.width());
+                $stickyCol.width($intercell.width());
+                $stickyCol.css("maxWidth", $intercell.width());
+            } else {
+                var $intercell = $t.find('colgroup col:first-child');
+                $stickyCol.width($intercell.width());
+                $stickyCol.css("maxWidth", $intercell.width());
+            }
+
+            // Set widths
+            var setWidths = function () {
+                    $t
+                        .find('thead th').each(function (i) {
+                        $stickyHead.find('th').eq(i).width($(this).width());
+                    })
+                        .end()
+                        .find('thead tr').each(function (i) {
+                        $stickyHead.find('tr').eq(i).height($(this).height());
+                    })
+                        .end()
+                        .find('tr').each(function (i) {
+                        $stickyCol.find('tr').eq(i).height($(this).height());
+                    });
+
+                    // Set width of sticky table head
+                    $stickyHead.width($t.width());
+                    $stickyHead.css("maxWidth", $t.width() + "px");
+
+                    // Set width of sticky table col
+                    $stickyCol.find('th').add($stickyInsct.find('th')).width($t.find('thead th').width());
+                    var $firstRow = $t.find('thead tr:first-child');
+                    $stickyInsct.find("tr:first-child").height($firstRow.height());
+                },
+                repositionStickyHead = function () {
+                    // Return value of calculated allowance
+                    var allowance = calcAllowance();
+
+                    // Check if wrapper parent is overflowing along the y-axis
+                    if ($t.height() > $stickyWrap.height()) {
+                        // If it is overflowing (advanced layout)
+                        // Position sticky header based on wrapper scrollTop()
+                        if ($stickyWrap.scrollTop() > 0) {
+                            // When top of wrapping parent is out of view
+                            $stickyHead.add($stickyInsct).css({
+                                opacity: 1,
+                                top: $stickyWrap.scrollTop()
+                            });
+                        } else {
+                            // When top of wrapping parent is in view
+                            $stickyHead.add($stickyInsct).css({
+                                opacity: 0,
+                                top: 0
+                            });
+                        }
+                    } else {
+                        // If it is not overflowing (basic layout)
+                        // Position sticky header based on viewport scrollTop
+                        if ($w.scrollTop() > $t.offset().top && $w.scrollTop() < $t.offset().top + $t.outerHeight() - allowance) {
+                            // When top of viewport is in the table itself
+                            $stickyHead.add($stickyInsct).css({
+                                opacity: 1,
+                                top: $w.scrollTop() - $t.offset().top
+                            });
+                        } else {
+                            // When top of viewport is above or below table
+                            $stickyHead.add($stickyInsct).css({
+                                opacity: 0,
+                                top: 0
+                            });
+                        }
+                    }
+                },
+                repositionStickyCol = function () {
+                    if ($stickyWrap.scrollLeft() > 0) {
+                        // When left of wrapping parent is out of view
+                        $stickyCol.add($stickyInsct).css({
+                            opacity: 1,
+                            left: $stickyWrap.scrollLeft()
+                        });
+                    } else {
+                        // When left of wrapping parent is in view
+                        $stickyCol
+                            .css({opacity: 0})
+                            .add($stickyInsct).css({left: 0});
+                    }
+                },
+                calcAllowance = function () {
+                    var a = 0;
+                    // Calculate allowance
+                    $t.find('tbody tr:lt(3)').each(function () {
+                        a += $(this).height();
+                    });
+
+                    // Set fail safe limit (last three row might be too tall)
+                    // Set arbitrary limit at 0.25 of viewport height, or you can use an arbitrary pixel value
+                    if (a > $w.height() * 0.25) {
+                        a = $w.height() * 0.25;
+                    }
+
+                    // Add the height of sticky header
+                    a += $stickyHead.height();
+                    return a;
+                };
+
+            setWidths();
+
+            $t.parent('.sticky-wrap').scroll($.throttle(250, function () {
+                repositionStickyHead();
+                repositionStickyCol();
+            }));
+            if ($t.hasClass('table-bordered')) {
+                $stickyHead.addClass("table-bordered");
+                $stickyCol.addClass("table-bordered");
+                $stickyInsct.addClass("table-bordered");
+            }
+            if ($t.hasClass('em-widths')) {
+                $stickyHead.addClass("em-widths");
+                $stickyCol.addClass("em-widths");
+                $stickyInsct.addClass("em-widths");
+            }
+            $stickyHead.addClass("table");
+            $stickyCol.addClass("table");
+            $stickyInsct.addClass("table");
+
+            $w
+                .load(setWidths)
+                .resize($.debounce(250, function () {
+                    setWidths();
+                    repositionStickyHead();
+                    repositionStickyCol();
+                }))
+                .scroll($.throttle(250, repositionStickyHead));
+        }
+    });
+});

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<!-- saved from url=(0024)https://kb.iu.edu/d/adxz -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="copyright" content="Copyright 2020, The Trustees of Indiana University">
+    <meta name="description" content="The vi text editor has three modes: command, input, and ex.">
+    <link rel="search" type="application/opensearchdescription+xml" title="IU Knowledge Base" href="https://kb.iu.edu/resources/kms/opensearch.xml">
+    <title>Use the vi text editor</title>
+    <meta name="keywords">
+    <meta name="last-modified" content="2019-08-27 08:52:16">
+    <meta name="audiences" content="default">
+    <meta name="approved" content="2016-12-01 13:18:36">
+    <meta name="owner-group" content="ittraining">
+    <meta name="docid" content="adxz">
+    <meta name="cache-hits" content="0">
+    <meta name="cache-misses" content="0">
+    <link rel="canonical" href="https://kb.iu.edu/d/adxz">
+    <link rel="shortcut icon" type="image/x-icon" href="https://kb.iu.edu/favicon.ico">
+    <!-- commentDefault.html -->
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="./Use the vi text editor_files/font-awesome.min.css">
+    <!-- BRAND FONTS -->
+    <!--
+    <link href="//fonts.iu.edu/style.css?family=BentonSans:regular,bold,italic|BentonSansLight:regular|BentonSansCond:regular,bold|GeorgiaPro:regular" media="screen" rel="stylesheet" type="text/css"/>
+    -->
+    <link href="./Use the vi text editor_files/style.css" media="screen" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./Use the vi text editor_files/fonts.min.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" media="screen,print" href="./Use the vi text editor_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./Use the vi text editor_files/jquery-ui-1.10.4.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="./Use the vi text editor_files/colorbox.css">
+    <!-- IU BRANDING -->
+    <link rel="stylesheet" type="text/css" href="./Use the vi text editor_files/iu-brand.min.css">
+    <!-- UITS BRANDING -->
+    <link rel="stylesheet" type="text/css" href="./Use the vi text editor_files/it-brand.min.css">
+    <!-- custom styles for KB -->
+    <link rel="stylesheet" type="text/css" href="./Use the vi text editor_files/kb.min.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/resources/build/bootstrap/js/html5shiv.js"></script>
+    <script src="/resources/build/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- custom styles for KMS: may override Bootstrap & IU Branding styles -->
+    <link rel="stylesheet" type="text/css" media="screen,print" href="./Use the vi text editor_files/kms.min.css">
+    <!-- custom styles for KB -->
+    <link rel="stylesheet" type="text/css" media="print" href="./Use the vi text editor_files/print.css">
+    <!-- overrides -->
+    <link rel="stylesheet" type="text/css" href="./Use the vi text editor_files/overrides.min.css">
+    <script type="text/javascript" async="" src="./Use the vi text editor_files/recaptcha__vi.js.tải xuống" crossorigin="anonymous" integrity="sha384-EOsw366vZFUSVb/t1hOMr7vB6eSLN8aGcd3/LKj5GA7SloPQQIpWxVcvkY59XLGm"></script><script type="text/javascript" async="" src="./Use the vi text editor_files/linkid.js.tải xuống"></script><script async="" src="./Use the vi text editor_files/analytics.js.tải xuống"></script><script src="./Use the vi text editor_files/head.js.tải xuống"><!--comment--></script>
+</head>
+<body class="kms-doc comment-default-layout" style="zoom: 1;">
+<!-- Wrap all page content here -->
+<div id="wrap">
+    <div>
+
+    <div id="sr-links" class="sr-only">
+        Skip to:
+        <ul>
+            
+            
+                <li>
+                    <a id="skip-to-content" href="https://kb.iu.edu/d/adxz#kms-document-div" accesskey="c">content</a>
+                </li>
+            
+            <li><a id="skip-to-search" href="https://kb.iu.edu/d/adxz#search-input">search</a></li>
+            <li>
+                <span>
+                    <a id="skip-to-login" accesskey="l" href="https://kb.iu.edu/d/adxz#login_button">login</a>
+                </span>
+                
+            </li>
+        </ul>
+    </div>
+</div>
+    <header class="institution-header" id="branding-bar-v1" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+
+    <div class="bar">
+        <!-- *** Changed "wrapper" class to "canister" to work with our grid system.
+        Also added a "whole" unit to get the header to line up. *** -->
+        <div class="canister">
+            <div class="unit whole">
+                <h1 class="campus">
+                    <a href="http://www.iu.edu/" title="Indiana University">
+                        <img src="./Use the vi text editor_files/trident-tab.gif" height="73" width="64" alt=" ">
+                        <span class="show-on-desktop" itemprop="name sourceOrganization provider">Indiana University</span>
+                        <span class="show-on-tablet" itemprop="name sourceOrganization provider">Indiana University</span>
+                        <span class="show-on-mobile" itemprop="name sourceOrganization provider">Indiana University</span>
+                    </a>
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+    <section class="site-content">
+        <header id="nav-bar" class="site-header hidden-print">
+    <!-- Fixed navbar -->
+    <div class="canister skinny">
+        <div class="unit half">
+            <h1 class="site-title"><a class="site-title-link" href="https://kb.iu.edu/index.html">Knowledge Base</a></h1>
+        </div>
+        <!-- Checkbox needs to be here -->
+        <input type="checkbox" value="1" id="menuToggle" class="show-nav hidden-element">
+        <div class="unit half nav-bg nav-container">
+            <div class="mobile-only show-nav-btn">
+                <label for="menuToggle" class="mobile-only show-nav"><i class="fa fa-bars">&nbsp;</i><span class="sr-only">Menu</span></label>
+            </div>
+            <div class="site-nav" id="nav-toggle">
+                <nav role="navigation" class="nav-inline text-right">
+                    <ul>
+                        <li class="default"><a href="https://kb.iu.edu/">Home</a>
+                        </li>
+                        <li class="default"><a href="https://kb.iu.edu/d/menu">Menu</a></li>
+                        <li class="default"><a href="https://kb.iu.edu/d/line">About us</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="kb-content">
+            <section class="section it-black-90 hidden-print iu-cream-text search-bar">
+                <div class="canister" id="KMS-search">
+                    <form class="form-inline" role="search" method="GET" action="https://kb.iu.edu/search">
+
+    <div class="canister kb-search-container">
+        <div class="unit whole" id="search-input">
+            <label class="sr-only" for="">Knowledge Base</label>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" class="kb-search-text sqr-it ui-autocomplete-input" accesskey="s" id="kb-search-text" size="35" name="q" placeholder="Search the Knowledge Base..." required="required" value="" autocomplete="off">
+                    <button class="button-primary kb-search sqr-it" type="submit" id="search-button" data-original-title="" title="">
+                        <span class="glyphicon glyphicon-search"></span><span class="sr-only">Search</span>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-5 lg-content-centered md-content-centered sm-content-left xs-content-left">
+                    <span class="button-secondary login-button">
+                        
+                        <a class="" accesskey="i" id="login_button" href="https://kb.iu.edu/secure?returnUrl=%2Fd%2Fadxz">
+                            <span class="glyphicon glyphicon-log-in"></span> <span class=""> Log in</span>
+                        </a>
+                    </span>
+                    
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-7 lg-content-right md-content-right sm-content-right xs-content-right">
+                    <ul class="search-tool-buttons it-black-90-text simple-button-group filled-buttons tight-buttons">
+                        <li class="" id="search-options-button">
+                            <button type="button" class="it-black-15 it-black-90-text options-button button-secondary collapsed" data-toggle="collapse" data-target="#search-options" data-original-title="" title="">
+                                <span class="glyphicon glyphicon-cog" title="Options"></span>
+                                <span class="sr-only">Options</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="it-black-15 it-black-90-text help-button button-secondary" data-container="body" data-toggle="popover" data-placement="left" data-html="true" title="" data-content="&lt;p&gt;Chat: &lt;a href=&#39;http://ithelplive.iu.edu&#39;&gt;ITHelpLive&lt;/a&gt;&lt;br /&gt;Email: &lt;a href=&#39;mailto:ithelp@iu.edu&#39;&gt;ithelp@iu.edu&lt;/a&gt;&lt;br /&gt;Phone: &lt;a href=&#39;/d/bdti?t=plain&#39;&gt;Call your campus support center&lt;/a&gt;&lt;br /&gt;&lt;a href=&#39;/d/amgy&#39;&gt;More options &gt;&gt;&lt;/a&gt;&lt;/p&gt;" data-original-title="">
+                                <span class="glyphicon glyphicon-question-sign" title="Help"></span>
+                                <span class="sr-only">Help</span>
+                            </button>
+                        </li>
+                        <li>
+
+                            <a href="http://ithelplive.iu.edu/" class="it-black-15 it-black-90-text button-secondary" id="chat-button" title="Chat with a consultant" target="_blank">
+                                <span class="glyphicon"></span>
+                                <span class="sr-only">Chat with a consultant</span>
+                            </a>
+
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="canister editor-buttons-and-options">
+        <div class="unit two-thirds pull-right">
+            <div class="canister search-options-container collapse" id="search-options">
+                <div class="unit one-third" id="KBsearchNumber">
+                    <select class="" id="KBsearchNumberSelect" name="s">
+                        <option>15</option>
+                        <option>50</option>
+                        <option>100</option>
+                        <option>300</option>
+                    </select>
+                    <label for="KBsearchNumberSelect">results per page&nbsp;&nbsp;&nbsp; </label>
+                </div>
+                <div class="unit two-thirds" id="KBsearchArchive">
+                    <input type="checkbox" id="a" name="a" value="yes">
+                    <label for="a">Include archived documents</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+                </div>
+            </section>
+            <section class="section">
+                <div class="canister page-content" id="KMS-content">
+                    <div class="unit kb-doc">
+                        <!-- Begin page content -->
+                        <main class="main kb">
+    
+    <div id="kms-document-div"><h1>Use the vi text editor</h1> 
+ <!-- Frozen per USSG 9/12/2004 -mirsteve -->
+
+ <p>The vi text editor has three modes: command, input, and ex.</p>
+
+ <h2>Command mode</h2>
+
+ <p>When starting, vi begins in command mode. If you are ever unsure which mode you're in, press <code>Esc</code> to return to command mode. In command mode, you can move around with the arrow keys, or by using the vi movement keys, as follows: </p>
+
+ <div class="table-responsive"><table class="table" title="vi movement keys">
+  <colgroup><col style="width:42%">
+  <col style="width:57%">
+  
+  
+  
+  
+ </colgroup><tbody><tr>
+   <td><code>h</code> </td>
+   <td>left </td>
+  </tr><tr>
+   <td><code>j</code> </td>
+   <td>down </td>
+  </tr><tr>
+   <td><code>k</code> </td>
+   <td>up</td>
+  </tr><tr>
+   <td><code>l</code> </td>
+   <td>right</td>
+  </tr></tbody></table></div><div class="visible-print"><table class="table" title="vi movement keys">
+  <colgroup><col style="width:42%">
+  <col style="width:57%">
+  
+  
+  
+  
+ </colgroup><tbody><tr>
+   <td><code>h</code> </td>
+   <td>left </td>
+  </tr><tr>
+   <td><code>j</code> </td>
+   <td>down </td>
+  </tr><tr>
+   <td><code>k</code> </td>
+   <td>up</td>
+  </tr><tr>
+   <td><code>l</code> </td>
+   <td>right</td>
+  </tr></tbody></table></div>
+
+ <p>Several vi commands are listed in the table below:</p>
+
+ <div class="table-responsive"><table class="table-bordered table" title="vi commands and actions">
+  <colgroup><col style="width:27%">
+  <col style="width:72%">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ </colgroup><thead><tr>
+   <th>Command</th>
+   <th>Action </th>
+  </tr></thead><tbody><tr>
+   <td><code>Ctrl-b</code></td>
+   <td>Go back one page </td>
+  </tr><tr>
+   <td><code>Ctrl-f</code></td>
+   <td>Go forward one page </td>
+  </tr><tr>
+   <td><code>x</code></td>
+   <td><div class="wrap">Delete the character the cursor is on </div></td>
+  </tr><tr>
+   <td><code>Shift-x</code></td>
+   <td><div class="wrap">Delete the character before the cursor </div></td>
+  </tr><tr>
+   <td><code>dd</code></td>
+   <td>Delete the current line </td>
+  </tr><tr>
+   <td><code>Shift-d</code></td>
+   <td><div class="wrap">Delete everything from the cursor to the end of the line </div></td>
+  </tr><tr>
+   <td><code>u</code></td>
+   <td><div class="wrap">Undelete a line you just deleted </div></td>
+  </tr><tr>
+   <td><code>Shift-u</code></td>
+   <td><div class="wrap">Undo all changes to the current line </div></td>
+  </tr><tr>
+   <td><code>Shift-z-z</code></td>
+   <td><div class="wrap">Save your file and exit the vi editor </div></td>
+  </tr></tbody></table></div><div class="visible-print"><table class="table-bordered table" title="vi commands and actions">
+  <colgroup><col style="width:27%">
+  <col style="width:72%">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ </colgroup><thead><tr>
+   <th>Command</th>
+   <th>Action </th>
+  </tr></thead><tbody><tr>
+   <td><code>Ctrl-b</code></td>
+   <td>Go back one page </td>
+  </tr><tr>
+   <td><code>Ctrl-f</code></td>
+   <td>Go forward one page </td>
+  </tr><tr>
+   <td><code>x</code></td>
+   <td><div class="wrap">Delete the character the cursor is on </div></td>
+  </tr><tr>
+   <td><code>Shift-x</code></td>
+   <td><div class="wrap">Delete the character before the cursor </div></td>
+  </tr><tr>
+   <td><code>dd</code></td>
+   <td>Delete the current line </td>
+  </tr><tr>
+   <td><code>Shift-d</code></td>
+   <td><div class="wrap">Delete everything from the cursor to the end of the line </div></td>
+  </tr><tr>
+   <td><code>u</code></td>
+   <td><div class="wrap">Undelete a line you just deleted </div></td>
+  </tr><tr>
+   <td><code>Shift-u</code></td>
+   <td><div class="wrap">Undo all changes to the current line </div></td>
+  </tr><tr>
+   <td><code>Shift-z-z</code></td>
+   <td><div class="wrap">Save your file and exit the vi editor </div></td>
+  </tr></tbody></table></div>
+
+ <div class="panel panel-info">
+
+  <div class="panel-heading"><strong>Note:</strong></div>
+
+  <div class="panel-body"> In command mode, you can type a number before pressing a command key to repeat the command multiple times. For example, to delete eight lines from the cursor position, you could press <code>8</code> and then type <code>dd</code>.
+  </div>
+ </div>
+
+ <h2>Input mode</h2>
+
+ <p>The input mode lets you insert or append text. To insert text before the cursor's current position, in command mode, press <code>i</code>. Similarly, to append after the cursor, you can type <code>a</code>. Remember that you can't move around with the cursor keys in this mode. When you're done entering text, press <code>Esc</code> to go back to command mode.</p>
+
+ <h2>Ex mode</h2>
+
+ <p>The ex mode is an extension of command mode. To get into it, press <code>Esc</code> and then <code>:</code> (the colon). The cursor will go to the bottom of the screen at a colon prompt. Write your file by entering <code>:w</code> and quit by entering <code>:q</code>. You can combine these to save and exit by entering <code>:wq</code>. However, if you're finished with your file, it's generally more convenient to type <code>Shift-z-z</code> from command mode.</p>
+
+ <div>
+<!-- this document is being used for testing the KMS. PLEASE DO NOT CHANGE IT. automated testing depends on its being stable. if you have questions, contact madalton or one of the devs -->
+
+<p>At Indiana University, for personal or departmental Linux or Unix systems support, see <a class="kba" href="https://kb.iu.edu/d/beqc" title="">Get help for Linux or Unix at IU</a>.</p>
+</div>
+
+<div class="references panel panel-primary"><div class="panel-heading"><h2 class="panel-title">Related documents</h2></div>
+<div class="list-group"><a class="list-group-item" href="https://kb.iu.edu/d/afcz">Quit the vi editor without saving your changes</a>
+<a class="list-group-item" href="https://kb.iu.edu/d/aeug">About Nano</a>
+<a class="list-group-item" href="https://kb.iu.edu/d/acnc">Set your default (preferred) editor in Unix</a>
+</div></div>
+</div>
+
+
+</main>
+
+                        <div>
+
+
+    <div id="kms-document-div">
+
+        <div id="kms-documentMetadata-div">
+            <p>
+                <em>This is document</em> <span>adxz</span> <em>in the Knowledge Base.</em>
+                <br>
+                <em>Last modified on</em> <span>2019-08-27 08:52:16</span><em>.</em>
+            </p>
+
+        </div>
+        
+    </div>
+
+
+</div>
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h2 class="panel-title">Contact us</h2></div>
+                            <div class="panel-body">
+                                For help or to comment, <a href="https://mailform.kb.iu.edu/email.php?cid=65">email the
+                                UITS Support Center</a>.
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End page content -->
+
+                </div>
+            </section>
+        </div>
+        <!-- UITS FOOTER -->
+        <footer class="skirt kb-footer kb-bg-grey-01">
+
+    <div class="canister">
+        <div class="unit one-fourth conect-with-uits">
+            <h6>Connect with UITS</h6>
+            <ul class="socialist">
+                <li><a href="http://www.facebook.com/iu.uits" target="_blank"><span class="fa fa-facebook"></span></a>
+                </li>
+                <li><a href="https://twitter.com/insideuits" target="_blank"><span class="fa fa-twitter"></span></a>
+                </li>
+                <li><a href="http://www.youtube.com/uitsatiu" target="_blank"><span class="fa fa-youtube"></span></a>
+                </li>
+            </ul>
+            <p class="app-version text-muted">Version: trunk</p>
+        </div>
+        <div class="unit one-fourth kb-nav-repeat">
+            <h6>Navigation</h6>
+            <ul class="links">
+                <li class="default"><a href="https://kb.iu.edu/">Home</a>
+                </li>
+                <li class="default"><a href="https://kb.iu.edu/d/menu">Menu</a></li>
+                <li class="default"><a href="https://kb.iu.edu/d/line">About
+                    us</a></li>
+            </ul>
+        </div>
+        <div class="unit one-fourth it-at-iu">
+            <h6>IT@IU</h6>
+            <ul class="links">
+                <li><a href="http://it.iu.edu/about/" target="_blank">About IT</a></li>
+                <li><a href="https://uits.iu.edu/staff" target="_blank">IT staff</a></li>
+                <li><a href="http://it.iu.edu/jobs/" target="_blank">Jobs in IT</a></li>
+                <li><a href="http://it.iu.edu/ovpit/" target="_blank">OVPIT</a></li>
+            </ul>
+        </div>
+        <div class="unit one-fourth kb-contact">
+            <h6>Support &amp; More</h6>
+
+            <ul class="links">
+                <li><a href="http://ithelplive.iu.edu/" title="IT Help Live">Chat with a consultant</a>
+                </li>
+                <li><a href="https://mailform.kb.iu.edu/email.php?cid=1061" title="Ask IT">AskIU</a></li>
+                <li><a href="https://one.iu.edu/" title="One.IU">One.IU</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+        <!-- /UITS FOOTER -->
+    </section>
+    <!-- IU FOOTER -->
+    <!-- *** Start IU brand footer *** -->
+    <footer id="footer-2020" class="footer-2020" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+
+    <div class="flex-row pad">
+        <p class="signature">
+            <a href="https://www.iu.edu/" class="signature-link signature-img"><img src="./Use the vi text editor_files/iu-sig-formal.svg" alt="Indiana University"></a>
+        </p>
+
+        <p class="copyright">
+            <span class="line-break">
+                <a href="https://accessibility.iu.edu/assistance" id="accessibility-link" title="Having trouble accessing this web page content? Please visit this page for assistance.">Accessibility</a> |
+                <a id="privacy-policy-link" href="https://kb.iu.edu/d/priv">Privacy Notice</a>
+            </span>
+            <span class="hide-on-mobile"> | </span>
+            <span class="line-break">
+                <a href="https://www.iu.edu/copyright/index.html">Copyright</a> © 2020
+                <span class="line-break-small">The Trustees of
+                    <a href="https://www.iu.edu/" itemprop="url"><span itemprop="name">Indiana University</span></a>
+                </span>
+            </span>
+        </p>
+    </div>
+</footer>
+</div>
+<div id="lightboxEnabler" class="visible-lg visible-md"></div>
+<div id="kb-inline-javascript-div" class="kb-invisible">
+    <script>
+        kb = new Object();
+        kb.autoSuggestUrl = '/auto-suggest';
+        kb.problemSubmitUrl ='/d/problem';
+        kb.commentSubmitUrl ='/d/comment';
+        kb.grecaptchaSiteKey = '6LdtM0MUAAAAAKJRcEXAD5vHbX1GjgAGM-t-Zdhf';
+        kb.isloggedIn =false;
+        kb.generatePasswordUrl = '/rest/generate/password';
+        kb.bannerMessageUrl = '/rest/banner/message';
+    </script>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="./Use the vi text editor_files/jquery-1.9.0.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/jquery.h5validate.js.tải xuống"><!--comment--></script>
+<div id="analytics" class="kb-invisible">
+
+    <script>
+        var analyticsId = 'UA-48518862-1';
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', analyticsId, 'auto');
+        ga('set', 'anonymizeIp', true);
+        ga('require', 'linkid', 'linkid.js');
+        if ($('meta[name=owner-group]').length > 0) {
+            ga('set', 'dimension1', $('meta[name=owner-group]').attr('content'));
+        }
+        if ($('meta[name=audiences]').length > 0) {
+            ga('set', 'dimension2', $('meta[name=audiences]').attr('content'));
+        }
+        if ($('link[rel="canonical"]').length > 0) {
+            ga('set', 'location', $('link[rel="canonical"]').attr('href'));
+        }
+        ga('send', 'pageview');
+
+    </script>
+    
+
+</div>
+<script src="./Use the vi text editor_files/bootstrap.min.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/app.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/jquery-ui-1.10.4.custom.min.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/jquery.colorbox-min-1.5.9.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/kms.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/comment.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/jquery.ba-throttle-debounce.min.js.tải xuống"><!--comment--></script>
+<script src="./Use the vi text editor_files/jquery.stickyheader.js.tải xuống"><!--comment--></script>
+<script>
+    var grecaptchaIsAvailable = function () {
+        kb.grecaptchaAvailable = true;
+    }
+</script>
+<script src="./Use the vi text editor_files/api.js.tải xuống" async="async" defer="defer"><!--comment--></script>
+
+
+
+<div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><button type="button" id="cboxPrevious" data-original-title="" title=""></button><button type="button" id="cboxNext" data-original-title="" title=""></button><button id="cboxSlideshow" data-original-title="" title=""></button><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div></div><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-1" tabindex="0" style="display: none;"></ul></body></html>

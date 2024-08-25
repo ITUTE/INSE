@@ -1,0 +1,8 @@
+- Keylogger: lấy mật khẩu, tài khoản, các thông tin quan trọng
+- Ransomeware: thiết lập môi trường an toàn 
+  + Máy ảo download
+  + Ngắt kết nối Internet
+  + Ngắt kết nối với máy thật
+  + Tạo các file text (có nội dung để kiểm tra)
+  => Chạy mã độc
+  => Kiểm tra các file text có bị mã hóa không?

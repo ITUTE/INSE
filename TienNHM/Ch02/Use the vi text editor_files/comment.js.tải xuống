@@ -1,0 +1,129 @@
+showRecaptcha = function (element, params) {
+    if (!kb.isloggedIn) {
+        if (kb.grecaptchaAvailable) {
+            return grecaptcha.render(element, params);
+        } else {
+            console.error("Grecaptcha is not available.");
+        }
+    }
+    return null;
+};
+resetRecaptcha = function (clientId) {
+    if (clientId !== undefined && clientId !== null) {
+        grecaptcha.reset(clientId);
+    }
+}
+
+commentGrecaptchaCallback = function(response) {
+    $("#commentGrecaptchaHiddenField").val(response);
+    $("#commentRecaptchaDiv").removeClass("ui-state-error");
+};
+
+commentGrecaptchaFailure = function() {
+    $("#commentGrecaptchaHiddenField").removeAttr("value");
+    $("#commentRecaptchaDiv").addClass("ui-state-error");
+};
+
+problemGrecaptchaCallback = function(response) {
+    $("#problemGrecaptchaHiddenField").val(response);
+    $("#problemRecaptchaDiv").removeClass("ui-state-error");
+};
+
+problemGrecaptchaFailure = function() {
+    $("#problemGrecaptchaHiddenField").removeAttr("value");
+    $("#problemRecaptchaDiv").addClass("ui-state-error");
+};
+
+$(document).ready(function () {
+
+    $('#collapseCommentDiv').on('shown.bs.collapse', function () {
+        if(kb.commentRecaptcha === undefined || kb.problemRecaptcha === null) {
+            kb.commentRecaptcha = showRecaptcha('commentRecaptchaDiv', {
+                'callback': commentGrecaptchaCallback,
+                'expired-callback': commentGrecaptchaFailure,
+                'error-callback': commentGrecaptchaFailure,
+                'sitekey': kb.grecaptchaSiteKey,
+                'theme': "white"
+            });
+        } else {
+            resetRecaptcha(kb.commentRecaptcha);
+        }
+        $("#commentGrecaptchaHiddenField").removeAttr("value");
+        $('#commentSuccess').empty();
+    });
+    $('#collapseProblemDiv').on('shown.bs.collapse', function () {
+        if(kb.problemRecaptcha === undefined || kb.problemRecaptcha === null) {
+            kb.problemRecaptcha = showRecaptcha('problemRecaptchaDiv', {
+                'callback': problemGrecaptchaCallback,
+                'expired-callback': problemGrecaptchaFailure,
+                'error-callback': problemGrecaptchaFailure,
+                'sitekey': kb.grecaptchaSiteKey,
+                'theme': "white"
+            });
+        } else {
+            resetRecaptcha(kb.problemRecaptcha);
+        }
+        $("#problemGrecaptchaHiddenField").removeAttr("value");
+        $('#problemSuccess').empty();
+    });
+    $("#problemForm").h5Validate();
+    $("#commentForm").h5Validate();
+});
+
+$("#problemForm").submit(function () {
+
+    var url = kb.problemSubmitUrl;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: $("#problemForm").serialize(),
+        success: function (data) {
+
+            if (data.type === 'success') {
+                $('#problemSuccess').empty().append('<p class="bg-success">' + data.message + '</p>');
+                $('#problemForm')[0].reset();
+                $("#problemGrecaptchaHiddenField").removeAttr("value");
+            } else {
+                $('#problemSuccess').empty().append('<p class="bg-danger">' + data.message + '</p>');
+                problemGrecaptchaFailure();
+            }
+            resetRecaptcha(kb.problemRecaptcha);
+        },
+        error: function (errorMessage) {
+            problemGrecaptchaFailure();
+            console.error(errorMessage);
+        }
+    });
+
+    return false;
+});
+
+$("#commentForm").submit(function () {
+
+    var url = kb.commentSubmitUrl;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: $("#commentForm").serialize(),
+        success: function (data) {
+
+            if (data.type === 'success') {
+                $('#commentSuccess').empty().append('<p class="bg-success">' + data.message + '</p>');
+                $('#commentForm')[0].reset();
+                $("#commentGrecaptchaHiddenField").removeAttr("value");
+            } else {
+                $('#commentSuccess').empty().append('<p class="bg-danger">' + data.message + '</p>');
+                commentGrecaptchaFailure();
+            }
+            resetRecaptcha(kb.commentRecaptcha);
+        },
+        error: function (errorMessage) {
+            commentGrecaptchaFailure();
+            resetRecaptcha(kb.commentRecaptcha);
+            console.error(errorMessage);
+        }
+    });
+
+    return false;
+});
+

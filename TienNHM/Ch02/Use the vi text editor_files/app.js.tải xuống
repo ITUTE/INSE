@@ -1,0 +1,52 @@
+$(document).ready(function () {
+    //tools click
+    $(".toggle-drawer").click(function (e) {
+        e.preventDefault();
+        if ($("#iu-branding").is(".show-tools")) {
+            $("#iu-branding").removeClass("show-tools");
+        } else {
+            $("#iu-branding").addClass("show-tools");
+        }
+    });
+
+    $(".scroll-to").click(function (e) {
+        e.preventDefault();
+        $.scrollTo($(this).attr("href"), 400);
+    });
+
+    $(".footer-menu .label").click(function (e) {
+        e.preventDefault();
+        if ($(".footer-menu").is(".open")) {
+            $(".footer-menu ul").animate({top: 0, height: 0}, 200);
+            $(".footer-menu").removeClass("open");
+        } else {
+            $(".footer-menu ul").animate({top: '-8em', height: '8em'}, 200);
+            $(".footer-menu").addClass("open");
+        }
+    });
+
+    $("#footer .site-nav .label").click(function (e) {
+        e.preventDefault();
+        if ($("#footer .site-nav").is(".open")) {
+            $("#footer .site-nav ul").slideUp(200);
+            $("#footer .site-nav").removeClass("open");
+        } else {
+            $("#footer .site-nav ul").slideDown(200);
+            $("#footer .site-nav").addClass("open");
+        }
+    });
+});
+
+
+function showMenu() {
+    var D = document;
+    var docHeight = Math.max(Math.max(D.body.scrollHeight, D.documentElement.scrollHeight), Math.max(D.body.offsetHeight, D.documentElement.offsetHeight), Math.max(D.body.clientHeight, D.documentElement.clientHeight));
+    $("#mobile-main-nav").css({"min-height": docHeight});
+    $("body").toggleClass("show-nav");
+}
+
+function activateNavLink() {
+    //this fails if the address bar isn't pointing at the actual php file (e.g. it.iu.edu, instead of it.iu.edu/index.php)
+    var path = window.location.href.toString().split(window.location.host)[1];
+    $('#main-nav').find('a[href$="' + path + '"]').parent().addClass('active');
+}

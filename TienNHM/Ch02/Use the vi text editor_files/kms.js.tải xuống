@@ -1,0 +1,182 @@
+/**
+ * TODO: Review placement.
+ * @param {type} pop
+ * @param {type} dom_el
+ * @returns {String}
+ */
+function get_popover_placement(pop, dom_el) {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var top_pos = $(dom_el).offset().top - $(window).scrollTop();
+    var bottom_pos = $(dom_el).offset().top + ($(dom_el).height() * 2);
+    var left_pos = $(dom_el).offset().left - $(window).scrollLeft();
+    // Plenty space to top, but not enough to left.
+    if (top_pos > 100 && left_pos < 200) {
+        return 'top';
+    }
+    // Plenty space to left and half the popover height above.
+    if (top_pos > 100 && (width - left_pos) > 200) {
+        return 'left';
+    }
+    // Not enough space to top and left has already been chosen, or there is some space to the bottom.
+    if (top_pos < 200 || (height - bottom_pos) > 200) {
+        return 'bottom';
+    }
+    // Not enough space below, pop up.
+    if (height - top_pos < 200) {
+        return 'top';
+    }
+    // Width is too small, pop to bottom. Top already handled.
+    if (width < 200) {
+        return 'bottom';
+    }
+    // Plenty of space to left, other options exhausted.
+    if (width - left_pos > 200) {
+        return 'left';
+    }
+    // Default if no other cases match.
+    return 'left';
+}
+
+$(document).ready(function () {
+
+    // Adds glyphicon for telephone links.
+    $("a[href^='tel:']").append("&nbsp;<span class=\"glyphicon glyphicon-phone-alt\"></span>");
+
+    // Smart popover placement.
+    $('button').popover({
+        placement: 'bottom'
+    });
+
+    // Hides popover when click occurs anywhere.
+    $('html').on('click', function (e) {
+        var clickedThingParent = $(e.target).closest('button');
+        var parentData = clickedThingParent.data("content");
+        var currentPopoverData = $('.popover.in .popover-content').html();
+        if (parentData && parentData.length > 0) {
+            parentData = parentData.substring(0, 9);
+        }
+        if (currentPopoverData && currentPopoverData.length > 0) {
+            currentPopoverData = currentPopoverData.substring(0, 9);
+        }
+        // only look at the first 10 char because both change the string to a certain extent.
+        // if the same, assume clicked element was inside the button that activated the open popover.
+        if (parentData === currentPopoverData) {
+            // returning true continues to bubble up
+            return true;
+        }
+        if (typeof $(e.target).data('original-title') === 'undefined') {
+            if ($('.popover').hasClass('in')) {
+                $('button').popover('toggle');
+            }
+        }
+    });
+
+    $('#kb-search-text').autocomplete({
+        source: kb.autoSuggestUrl,
+        minLength: 2,
+        delay: 200,
+        autoFocus: false
+    });
+
+    // Get all the anchors in the entire document
+    var anchors = document.getElementsByTagName('a');
+    // Loop through the anchors and add the click handler
+    for (var i in anchors) {
+        if (anchors[i].className && anchors[i].className.indexOf('new-window') !== -1) {
+            anchors[i].onclick = function () {
+                return !window.open(this);
+            };
+        }
+    }
+    $(".new-window").append('&nbsp;<span class="glyphicon glyphicon-new-window"></span>');
+    if ($('#lightboxEnabler').is(':visible')) {
+        $(".lightbox").colorbox({
+            rel: 'lightbox', maxWidth: "90%", maxHeight: "90%", title: function () {
+                return this.title + " " + '(full size)'.link(this.href);
+            }
+        });
+    }
+
+    //remove responsive div from table for print view  
+    $("div.table-responsive").each(function (i, current) {
+        //clone table and make it only visible in print view
+        var newtable = $(current).children("table").clone(true);
+        var newDiv = $("<div class='visible-print'/>").append(newtable);
+        $(current).after(newDiv);
+    });
+
+    $("#kms-generate-password-btn").on('click', function () {
+        $.getJSON(kb.generatePasswordUrl, function (data) {
+            $("#generated-password").empty().text(data.password);
+            $("#password").val(data.password);
+            $("#rePassword").val(data.password);
+            $('#generate-password-modal').modal({
+                show: true
+            });
+            console.log("success " + data.password);
+        }).fail(function () {
+            console.log("error getting auto generated password");
+        });
+    });
+
+    ;
+    (function () {
+        function setBannerWidth() {
+            "use strict";
+            $("#kms-alert-banner-msg").css("width", $(".container").css("width"));
+        }
+
+        function removeNavClass() {
+            "use strict";
+            var msg = $("#kms-alert-banner-msg");
+            if (msg.hasClass("kms-alert-banner-nav-shown")) {
+                msg.removeClass("kms-alert-banner-nav-shown");
+            }
+        }
+
+        $.getJSON(kb.bannerMessageUrl, function (data) {
+
+            //var json = JSON.parse('{ "status": "ok", "showAlert": true, "message": "Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio." }');
+            if (data['enabled']) {
+                $("body").prepend("<div id=\"kms-alert-banner-wrapper\"><div id=\"kms-alert-banner-msg\">" + data['message'] + "</div></div>");
+            } else {
+                var wrapper = $("#kms-alert-banner-wrapper");
+                if (wrapper.size() > 0) {
+                    wrapper.remove();
+                }
+            }
+
+        }).fail(function () {
+            console.log("error with banner");
+        });
+
+
+        // This handles padding for the nav hamburger in mobile view.
+        var navShown = false;
+        $(".show-nav-btn").on("click", function () {
+            "use strict";
+            console.log("Clicked show-nav-btn");
+            var msg = $("#kms-alert-banner-msg");
+            if (navShown) {
+                navShown = false;
+                removeNavClass();
+            } else {
+                navShown = true;
+                msg.addClass("kms-alert-banner-nav-shown");
+            }
+        });
+
+        setBannerWidth();
+        $(window).on("resize", function () {
+            "use strict";
+            setBannerWidth();
+        });
+    })();
+
+});
+
+
+
+
+

@@ -1,0 +1,12 @@
+/*
+    Created on : May 28, 2014, 10:47:58 AM
+    Author     : asikprad
+*/
+
+.kb pre {
+    white-space: normal ! important;
+}
+
+.kb .table-responsive {
+    display: none;
+}
